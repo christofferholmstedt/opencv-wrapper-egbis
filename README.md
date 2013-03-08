@@ -1,5 +1,7 @@
-OpenCV Wrapper for Efficient Graph-Based Image Segmentation
-===========================================================
+OpenCV wrapper for the "egbis" segmentation algorithm
+=====================================================
+OpenCV wrapper for Efficient Graph-Based Image Segmentation
+
 This is done as a part of my report about using the Efficient
 Graph-Based Image segmentation method to detect roads from Bing maps.
 
