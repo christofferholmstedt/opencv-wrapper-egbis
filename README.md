@@ -1,9 +1,7 @@
 OpenCV wrapper for the "egbis" segmentation algorithm
 =====================================================
 OpenCV wrapper for Efficient Graph-Based Image Segmentation algorithm developed
-by Pedro F. Felzenszwalb and Daniel P. Huttenlocher.
-
-This is done as a part of my report about using the Efficient
+by Pedro F. Felzenszwalb and Daniel P. Huttenlocher. This is done as a part of my report about using the Efficient
 Graph-Based Image segmentation method to detect roads from Bing maps.
 
 * [My project report here on
