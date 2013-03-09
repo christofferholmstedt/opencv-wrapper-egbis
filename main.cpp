@@ -71,13 +71,73 @@ Mat convertNativeToMat(image<rgb>* input){
     return output;
 }
 
+Mat runEgbisOnMat(Mat *input, float sigma, float k, int min_size, int *numccs) {
+    int w = input->cols;
+    int h = input->rows;
+    Mat output(Size(w,h),CV_8UC3);
+
+    // 1. Convert to native format
+    image<rgb> *converted = convertMatToNativeImage(input);
+    // 2. Run egbis algoritm
+    image<rgb> *seg = segment_image(converted, sigma, k, min_size, numccs);
+    // 3. Convert back to Mat format
+    output = convertNativeToMat(seg);
+
+    return output;
+}
+
+Mat egbisImage;
+Mat img;
+char* imageName;
+int num_ccs;
 int sigma_switch_value = 1;
-int sigma_switch_high = 5;
+int sigma_switch_high = 10;
 int k_switch_value = 3;
 int k_switch_high = 5;
 
 void switch_callback_sigma( int position ){
     sigma_switch_value = position;
+    float sigma_value;
+
+    switch (sigma_switch_value) {
+        case 0:
+            sigma_value = 0;
+            break;
+        case 1:
+            sigma_value = 0.1;
+            break;
+        case 2:
+            sigma_value = 0.2;
+            break;
+        case 3:
+            sigma_value = 0.3;
+            break;
+        case 4:
+            sigma_value = 0.4;
+            break;
+        case 5:
+            sigma_value = 0.5;
+            break;
+        case 6:
+            sigma_value = 0.6;
+            break;
+        case 7:
+            sigma_value = 0.7;
+            break;
+        case 8:
+            sigma_value = 0.8;
+            break;
+        case 9:
+            sigma_value = 0.9;
+            break;
+        case 10:
+            sigma_value = 1;
+            break;
+    }
+    egbisImage = runEgbisOnMat(&img, sigma_value, 500, 200, &num_ccs);
+
+    // 4. Present image
+    imshow( "EGBIS", egbisImage);
 }
 
 void switch_callback_k( int position ){
@@ -86,7 +146,6 @@ void switch_callback_k( int position ){
 
 int main(int argc, char **argv) {
 
-    Mat img;
     img = imread( argv[1], CV_LOAD_IMAGE_COLOR );
 
     if( !img.data )
@@ -95,23 +154,18 @@ int main(int argc, char **argv) {
         return -1;
     }
 
-    char* imageName = argv[1];
-    int num_ccs;
 
-    // 1. Convert to native format
-    image<rgb> *converted = convertMatToNativeImage(&img);
-    // 2. Run egbis algoritm (input, sigma, k, min_size, &num_ccs)
-    image<rgb> *seg = segment_image(converted, 0.5, 500, 200, &num_ccs);
-    // 3. Convert back to Mat format
-    Mat egbisImage = convertNativeToMat(seg);
+    imageName = argv[1];
+    egbisImage = runEgbisOnMat(&img, 0.5, 500, 200, &num_ccs);
+
     // 4. Present image
     namedWindow( imageName , CV_WINDOW_AUTOSIZE );
     imshow( imageName , img );
 
     cvCreateTrackbar("Sigma",imageName, &sigma_switch_value, sigma_switch_high, switch_callback_sigma);
 
-    namedWindow( "EGBIS image", CV_WINDOW_AUTOSIZE );
-    imshow( "EGBIS image", egbisImage);
+    namedWindow( "EGBIS", CV_WINDOW_AUTOSIZE );
+    imshow( "EGBIS", egbisImage);
 /*
     float sigma = atof(argv[1]);
     float k = atof(argv[2]);
