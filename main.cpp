@@ -1,42 +1,49 @@
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <iostream>
+/*
+Copyright (C) 2006 Pedro Felzenszwalb
 
-using namespace cv;
-using namespace std;
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
 
-int main( int argc, char** argv )
-{
-    if( argc != 2 )
-    {
-        cout << " Usage: display_image ImageToLoadAndDisplay \n " << endl;
-        return -1;
-    }
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    char* imageName = argv[1];
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
+*/
 
-    Mat image;
-    image = imread( argv[1], CV_LOAD_IMAGE_COLOR );
+#include <cstdio>
+#include <cstdlib>
+#include "egbis/image.h"
+#include "egbis/misc.h"
+#include "egbis/pnmfile.h"
+#include "egbis/segment-image.h"
 
-    if( !image.data )
-    {
-        cout << "Could not open or find the image." << std::endl;
-        return -1;
-    }
+int main(int argc, char **argv) {
+  if (argc != 6) {
+    fprintf(stderr, "usage: %s sigma k min input(ppm) output(ppm)\n", argv[0]);
+    return 1;
+  }
+  
+  float sigma = atof(argv[1]);
+  float k = atof(argv[2]);
+  int min_size = atoi(argv[3]);
+	
+  printf("loading input image.\n");
+  image<rgb> *input = loadPPM(argv[4]);
+	
+  printf("processing\n");
+  int num_ccs; 
+  image<rgb> *seg = segment_image(input, sigma, k, min_size, &num_ccs); 
+  savePPM(seg, argv[5]);
 
-    Mat gray_image;
-    cvtColor( image, gray_image, CV_BGR2GRAY );
+  printf("got %d components\n", num_ccs);
+  printf("done! uff...thats hard work.\n");
 
-    imwrite( "../../images/tempImage.jpg", gray_image );
-
-    namedWindow( imageName, CV_WINDOW_AUTOSIZE );
-    namedWindow( "Gray image", CV_WINDOW_AUTOSIZE );
-
-    imshow( imageName, image );
-    imshow( "Gray image", gray_image );
-
-    waitKey(0);
-
-    return 0;
+  return 0;
 }
+
