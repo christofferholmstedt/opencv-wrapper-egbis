@@ -31,57 +31,78 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 using namespace cv;
 using namespace std;
 
-/*
+
 image<rgb>* convertMatToNativeImage(Mat *input){
     int w = input->cols;
     int h = input->rows;
     image<rgb> *im = new image<rgb>(w,h);
-    for(int i =0; i<w; i++){
-        for(int j=0; j<h; j++){
-            CvScalar s = cvGet2D(input,j,i);
+
+    for(int i=0; i<input->rows; i++)
+    {
+        for(int j=0; j<input->cols; j++)
+        {
             rgb curr;
-            curr.r = s.val[0];
-            curr.g = s.val[1];
-            curr.b = s.val[2];
+            Vec3b intensity = input->at<Vec3b>(i,j);
+
+            curr.b = intensity.val[0];
+            curr.g = intensity.val[1];
+            curr.r = intensity.val[2];
             im->data[i+j*w] = curr;
+            /*
+            uchar blue = intensity.val[0];
+            uchar green = intensity.val[1];
+            uchar red = intensity.val[2];
+            */
+
         }
     }
     return im;
 }
-*/
+
+Mat convertNativeToMat(image<rgb>* input){
+    int w = input->width();
+    int h = input->height();
+    Mat output(Size(w,h),CV_8UC3);
+
+    for(int i =0; i<w; i++){
+        for(int j=0; j<h; j++){
+            rgb curr = input->data[i+j*w];
+            output.at<Vec3b>(i,j)[0] = curr.b;
+            output.at<Vec3b>(i,j)[1] = curr.g;
+            output.at<Vec3b>(i,j)[2] = curr.r;
+        }
+    }
+
+    return output;
+}
+
 int main(int argc, char **argv) {
 
-    char* imageName = argv[1];
+    Mat img;
+    img = imread( argv[1], CV_LOAD_IMAGE_COLOR );
 
-    Mat image;
-    image = imread( argv[1], CV_LOAD_IMAGE_COLOR );
-
-    // 1. Convert to native format
-    // image<rgb> *converted = convertMatToNativeImage(&image);
-    // 2. Run egbis algoritm
-    // 3. Convert back to Mat format
-    // 4. Present image
-
-    if( !image.data )
+    if( !img.data )
     {
         cout << "Could not open or find the image." << std::endl;
         return -1;
     }
 
+    char* imageName = argv[1];
+    int num_ccs;
+
+    // 1. Convert to native format
+    image<rgb> *converted = convertMatToNativeImage(&img);
+    // 2. Run egbis algoritm
+    image<rgb> *seg = segment_image(converted, 0.5, 500, 200, &num_ccs);
+    // 3. Convert back to Mat format
+    Mat egbisImage = convertNativeToMat(seg);
+    // 4. Present image
+
+
     // int num_ccs;
     // image<rgb> *seg = segment_image(image, 0.5, 500, 200, &num_ccs);
-/*
-    for(int i=0; i<image.rows; i++)
-    {
-        for(int j=0; j<image.cols; j++)
-        {
-            Vec3b intensity = image.at<Vec3b>(i,j);
-                uchar blue = intensity.val[0];
-                uchar green = intensity.val[1];
-                uchar red = intensity.val[2];
-        }
-    }
-*/
+
+
             // cout << three_channels[0].at<uchar>(i,j) << endl;
             // You can now access the pixel value with cv::Vec3b
                 // cout << image.at<uchar>(i,j) << endl;
@@ -89,7 +110,10 @@ int main(int argc, char **argv) {
                 //         img.at<cv::Vec3b>(i,j)[2] << std::endl;
 
     namedWindow( imageName, CV_WINDOW_AUTOSIZE );
-    imshow( imageName, image );
+    imshow( imageName, img );
+
+    namedWindow( "EGBIS image", CV_WINDOW_AUTOSIZE );
+    imshow( "EGBIS image", egbisImage);
 /*
     float sigma = atof(argv[1]);
     float k = atof(argv[2]);
