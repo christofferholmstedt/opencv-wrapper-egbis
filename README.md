@@ -9,6 +9,14 @@ Graph-Based Image segmentation method to detect roads from Bing maps.
 * [Efficient Graph-Based Image Segmentation
   algorithm](http://cs.brown.edu/~pff/segment/) (I recommend reading the paper)
 
+TODO
+----
+* Move algorithm wrapper to separate file so it can be used outside of my
+  example application.
+* Add slider for each input value.
+* Make the example more responsive (should not run EGBIS as soon as I
+  change one value/slider).
+* Move interface/gui code out of main.
 
 How to use
 ----------
