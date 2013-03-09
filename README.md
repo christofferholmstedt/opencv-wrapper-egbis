@@ -23,6 +23,9 @@ How to use
 This program is tested to work on Ubuntu 12.04 LTS with OpenCV compiled from
 source with Qt support.
 
+### Version 2.0.0
+Soon(tm)
+
 ### Version 1.0.1
 ##### OpenCV example
 [Tag
