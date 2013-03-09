@@ -15,15 +15,16 @@ How to use
 This program is tested to work on Ubuntu 12.04 LTS with OpenCV compiled from
 source with Qt support.
 
-### Version 1.0.0
+### Version 1.0.1
 ##### OpenCV example
-[Tag 1.0.0](https://github.com/christofferholmstedt/opencv-wrapper-egbis/tags)
+[Tag
+1.0.1](https://github.com/christofferholmstedt/opencv-wrapper-egbis/tree/1.0.1)
 
-The root directory in version 1.0.0 has an example OpenCV program from one of
+The root directory in this version has an example OpenCV program from one of
 the tutorials in the documentation. To build and run it do the following:
 
     To build:
-    cd <project_root_directory>
+    cd <project_root_directory>/
     mkdir build
     cd build/
     cmake ../
@@ -41,7 +42,7 @@ available with a CMakeLists.txt file to make it possible to generate build
 files with CMake.
 
     To build:
-    cd <project_root_directory/egbis/>
+    cd <project_root_directory>/egbis/
     mkdir build
     cd build/
     cmake ../
