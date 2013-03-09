@@ -1,4 +1,6 @@
 /*
+Copyright (C) 2013 Christoffer Holmstedt
+Copyright (C) 2010 Salik Syed
 Copyright (C) 2006 Pedro Felzenszwalb
 
 This program is free software; you can redistribute it and/or modify
@@ -43,17 +45,10 @@ image<rgb>* convertMatToNativeImage(Mat *input){
         {
             rgb curr;
             Vec3b intensity = input->at<Vec3b>(i,j);
-
             curr.b = intensity.val[0];
             curr.g = intensity.val[1];
             curr.r = intensity.val[2];
             im->data[i+j*w] = curr;
-            /*
-            uchar blue = intensity.val[0];
-            uchar green = intensity.val[1];
-            uchar red = intensity.val[2];
-            */
-
         }
     }
     return im;
@@ -97,18 +92,6 @@ int main(int argc, char **argv) {
     // 3. Convert back to Mat format
     Mat egbisImage = convertNativeToMat(seg);
     // 4. Present image
-
-
-    // int num_ccs;
-    // image<rgb> *seg = segment_image(image, 0.5, 500, 200, &num_ccs);
-
-
-            // cout << three_channels[0].at<uchar>(i,j) << endl;
-            // You can now access the pixel value with cv::Vec3b
-                // cout << image.at<uchar>(i,j) << endl;
-                //         " " << img.at<cv::Vec3b>(i,j)[1] << " " <<
-                //         img.at<cv::Vec3b>(i,j)[2] << std::endl;
-
     namedWindow( imageName, CV_WINDOW_AUTOSIZE );
     imshow( imageName, img );
 
@@ -129,19 +112,9 @@ int main(int argc, char **argv) {
 
     Mat gray_image;
     cvtColor( image, gray_image, CV_BGR2GRAY );
-
     imwrite( "../../images/tempImage.jpg", gray_image );
-
-    namedWindow( "Gray image", CV_WINDOW_AUTOSIZE );
-
-    imshow( "Gray image", gray_image );
 */
     waitKey(0);
-
-/*
-  printf("got %d components\n", num_ccs);
-  printf("done! uff...thats hard work.\n");
-*/
 
   return 0;
 }
