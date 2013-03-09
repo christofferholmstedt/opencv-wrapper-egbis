@@ -71,6 +71,19 @@ Mat convertNativeToMat(image<rgb>* input){
     return output;
 }
 
+int sigma_switch_value = 1;
+int sigma_switch_high = 5;
+int k_switch_value = 3;
+int k_switch_high = 5;
+
+void switch_callback_sigma( int position ){
+    sigma_switch_value = position;
+}
+
+void switch_callback_k( int position ){
+    k_switch_value = position;
+}
+
 int main(int argc, char **argv) {
 
     Mat img;
@@ -87,13 +100,15 @@ int main(int argc, char **argv) {
 
     // 1. Convert to native format
     image<rgb> *converted = convertMatToNativeImage(&img);
-    // 2. Run egbis algoritm
+    // 2. Run egbis algoritm (input, sigma, k, min_size, &num_ccs)
     image<rgb> *seg = segment_image(converted, 0.5, 500, 200, &num_ccs);
     // 3. Convert back to Mat format
     Mat egbisImage = convertNativeToMat(seg);
     // 4. Present image
-    namedWindow( imageName, CV_WINDOW_AUTOSIZE );
-    imshow( imageName, img );
+    namedWindow( imageName , CV_WINDOW_AUTOSIZE );
+    imshow( imageName , img );
+
+    cvCreateTrackbar("Sigma",imageName, &sigma_switch_value, sigma_switch_high, switch_callback_sigma);
 
     namedWindow( "EGBIS image", CV_WINDOW_AUTOSIZE );
     imshow( "EGBIS image", egbisImage);
