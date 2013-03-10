@@ -94,10 +94,13 @@ int sigma_switch_value = 1;
 int sigma_switch_high = 10;
 int k_switch_value = 3;
 int k_switch_high = 5;
+int run_switch_value = 0;
+int run_switch_high = 1;
+
+float sigma_value;
 
 void switch_callback_sigma( int position ){
     sigma_switch_value = position;
-    float sigma_value;
 
     switch (sigma_switch_value) {
         case 0:
@@ -134,14 +137,23 @@ void switch_callback_sigma( int position ){
             sigma_value = 1;
             break;
     }
-    egbisImage = runEgbisOnMat(&img, sigma_value, 500, 200, &num_ccs);
 
-    // 4. Present image
-    imshow( "EGBIS", egbisImage);
 }
 
 void switch_callback_k( int position ){
     k_switch_value = position;
+}
+
+void switch_callback_run( int position ){
+    if (position == 1)
+    {
+        // Calculate new EGBIS segmentation
+        egbisImage = runEgbisOnMat(&img, sigma_value, 500, 200, &num_ccs);
+        // Change image shown
+        imshow( "EGBIS", egbisImage);
+        run_switch_value = 0;
+        setTrackbarPos("Run", "EGBIS", run_switch_value);
+    }
 }
 
 int main(int argc, char **argv) {
@@ -156,13 +168,15 @@ int main(int argc, char **argv) {
 
 
     imageName = argv[1];
+    // Create the first EGBIS version with standard values.
     egbisImage = runEgbisOnMat(&img, 0.5, 500, 200, &num_ccs);
 
     // 4. Present image
     namedWindow( imageName , CV_WINDOW_AUTOSIZE );
     imshow( imageName , img );
 
-    cvCreateTrackbar("Sigma",imageName, &sigma_switch_value, sigma_switch_high, switch_callback_sigma);
+    cvCreateTrackbar("Sigma [x/10]",imageName, &sigma_switch_value, sigma_switch_high, switch_callback_sigma);
+    cvCreateTrackbar("Run",imageName, &run_switch_value, run_switch_high, switch_callback_run);
 
     namedWindow( "EGBIS", CV_WINDOW_AUTOSIZE );
     imshow( "EGBIS", egbisImage);
