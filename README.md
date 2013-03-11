@@ -13,10 +13,7 @@ TODO
 ----
 * Move algorithm wrapper to separate file so it can be used outside of my
   example application.
-* Add slider for each input value.
-* Make the example more responsive (should not run EGBIS as soon as I
-  change one value/slider).
-* Move interface/gui code out of main.
+* Move interface/gui code out of main.cpp.
 
 How to use
 ----------
@@ -24,7 +21,26 @@ This program is tested to work on Ubuntu 12.04 LTS with OpenCV compiled from
 source with Qt support.
 
 ### Version 2.0.0
-Soon(tm)
+##### OpenCV Wrapper Example
+[Tag
+2.0.0](https://github.com/christofferholmstedt/opencv-wrapper-egbis/tree/2.0.0)
+
+The root directory in this version has an example using my OpenCV Wrapper
+inside main.cpp. To build and run it do the following:
+
+    **To build**
+    cd <project_root_directory>/
+    mkdir build
+    cd build/
+    cmake ../
+    make
+
+    **To run**
+    ./main ../images/lulea1.ppm
+
+This will open the OpenCV highgui/Qt interface for two images. The original
+in color and a segmentet image in the other one. The segmentet image can
+be save using the "Save" trackbar.
 
 ### Version 1.0.1
 ##### OpenCV example
