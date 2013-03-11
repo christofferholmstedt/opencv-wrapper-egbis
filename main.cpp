@@ -33,7 +33,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 using namespace cv;
 using namespace std;
 
-
+/****
+ * OpenCV C++ Wrapper using the Mat class
+ * TODO: Move this to separate file.
+ ***/
 image<rgb>* convertMatToNativeImage(Mat *input){
     int w = input->cols;
     int h = input->rows;
@@ -77,25 +80,39 @@ Mat runEgbisOnMat(Mat *input, float sigma, float k, int min_size, int *numccs) {
     Mat output(Size(w,h),CV_8UC3);
 
     // 1. Convert to native format
-    image<rgb> *converted = convertMatToNativeImage(input);
+    image<rgb> *nativeImage = convertMatToNativeImage(input);
     // 2. Run egbis algoritm
-    image<rgb> *seg = segment_image(converted, sigma, k, min_size, numccs);
+    image<rgb> *segmentetImage = segment_image(nativeImage, sigma, k, min_size, numccs);
     // 3. Convert back to Mat format
-    output = convertNativeToMat(seg);
+    output = convertNativeToMat(segmentetImage);
 
     return output;
 }
+
+/****
+ * END OF: OpenCV C++ Wrapper using the Mat class
+ ***/
 
 Mat egbisImage;
 Mat img;
 char* imageName;
 int num_ccs;
+
+/****
+ * GUI related variables and functions (trackBars/Sliders).
+ * TODO: Move this to separate file.
+ ***/
+
 int sigma_switch_value = 1;
 int sigma_switch_high = 10;
-int k_switch_value = 3;
-int k_switch_high = 5;
+int k_switch_value = 500;
+int k_switch_high = 5000;
+int c_switch_value = 200;
+int c_switch_high = 5000;
 int run_switch_value = 0;
 int run_switch_high = 1;
+int save_switch_value = 0;
+int save_switch_high = 1;
 
 float sigma_value;
 
@@ -144,18 +161,45 @@ void switch_callback_k( int position ){
     k_switch_value = position;
 }
 
+void switch_callback_c( int position ){
+    c_switch_value = position;
+}
+
+void switch_callback_save( int position ){
+
+    if (position == 1)
+    {
+        // TODO: Add variables sigma, k and c to filename
+        // so multiple images can be saved.
+        imwrite( "../images/egbisImage.jpg", egbisImage);
+        c_switch_value = 0;
+    }
+}
+
 void switch_callback_run( int position ){
+
     if (position == 1)
     {
         // Calculate new EGBIS segmentation
-        egbisImage = runEgbisOnMat(&img, sigma_value, 500, 200, &num_ccs);
+        // (Mat *input, float sigma, float k, int min_size, int *numccs) {
+        egbisImage = runEgbisOnMat(&img, sigma_value, (float)k_switch_value, (float)c_switch_value, &num_ccs);
         // Change image shown
         imshow( "EGBIS", egbisImage);
         run_switch_value = 0;
+
+        // TODO: Fix this, it doesn't work as intended.
+        // http://docs.opencv.org/modules/highgui/doc/user_interface.html#settrackbarpos
         setTrackbarPos("Run", "EGBIS", run_switch_value);
     }
 }
 
+/****
+ * END OF: GUI related variables and functions (trackBars/Sliders).
+ ***/
+
+/****
+ * Main
+ ***/
 int main(int argc, char **argv) {
 
     img = imread( argv[1], CV_LOAD_IMAGE_COLOR );
@@ -175,8 +219,13 @@ int main(int argc, char **argv) {
     namedWindow( imageName , CV_WINDOW_AUTOSIZE );
     imshow( imageName , img );
 
+    // TODO: Change to C++ method
+    // http://docs.opencv.org/modules/highgui/doc/user_interface.html#createtrackbar
     cvCreateTrackbar("Sigma [x/10]",imageName, &sigma_switch_value, sigma_switch_high, switch_callback_sigma);
+    cvCreateTrackbar("k",imageName, &k_switch_value, k_switch_high, switch_callback_k);
+    cvCreateTrackbar("c",imageName, &c_switch_value, c_switch_high, switch_callback_c);
     cvCreateTrackbar("Run",imageName, &run_switch_value, run_switch_high, switch_callback_run);
+    cvCreateTrackbar("Save EGBIS image",imageName, &save_switch_value, save_switch_high, switch_callback_save);
 
     namedWindow( "EGBIS", CV_WINDOW_AUTOSIZE );
     imshow( "EGBIS", egbisImage);
@@ -202,3 +251,6 @@ int main(int argc, char **argv) {
   return 0;
 }
 
+/****
+ * END OF: Main
+ ***/
