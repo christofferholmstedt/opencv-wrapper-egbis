@@ -23,7 +23,7 @@ repository and OpenCV compiled from source with Qt support.
 ### Version 2.0.0
 ##### OpenCV wrapper Example
 [Tag
-2.0.0](https://github.com/christofferholmstedt/opencv-wrapper-egbis/tree/2.0.0)
+v2.0.0](https://github.com/christofferholmstedt/opencv-wrapper-egbis/tree/v2.0.0)
 
 The root directory in this version has an example using the OpenCV wrapper
 inside main.cpp. To build and run it do the following:
