@@ -16,3 +16,4 @@ Makefile
 lib*
 *.o
 tempImage.jpg
+egbisImage.jpg
