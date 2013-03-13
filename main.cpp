@@ -103,7 +103,7 @@ int num_ccs;
  * TODO: Move this to separate file.
  ***/
 
-int sigma_switch_value = 1;
+int sigma_switch_value = 5;
 int sigma_switch_high = 10;
 int k_switch_value = 500;
 int k_switch_high = 5000;
@@ -213,6 +213,7 @@ int main(int argc, char **argv) {
 
     imageName = argv[1];
     // Create the first EGBIS version with standard values.
+    // TODO: Set this input values to match the ones define in global scope
     egbisImage = runEgbisOnMat(&img, 0.5, 500, 200, &num_ccs);
 
     // 4. Present image
