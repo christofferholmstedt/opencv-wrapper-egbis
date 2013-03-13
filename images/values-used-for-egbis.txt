@@ -1,0 +1,5 @@
+lulea-egbis-segments-from-painted
+---------------------------------
+Sigma   =   0.8
+K       =   200
+c       =   180
