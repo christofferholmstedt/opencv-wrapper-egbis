@@ -103,8 +103,8 @@ int num_ccs;
  * TODO: Move this to separate file.
  ***/
 
-int sigma_switch_value = 5;
-int sigma_switch_high = 10;
+int sigma_switch_value = 1;
+int sigma_switch_high = 30;
 int k_switch_value = 500;
 int k_switch_high = 5000;
 int c_switch_value = 200;
@@ -119,6 +119,8 @@ float sigma_value;
 void switch_callback_sigma( int position ){
     sigma_switch_value = position;
 
+    sigma_value = (float)sigma_switch_value/10;
+/*
     switch (sigma_switch_value) {
         case 0:
             sigma_value = 0;
@@ -154,7 +156,7 @@ void switch_callback_sigma( int position ){
             sigma_value = 1;
             break;
     }
-
+*/
 }
 
 void switch_callback_k( int position ){
