@@ -6,19 +6,18 @@
 
 /****
  * OpenCV C++ Wrapper using the Mat class
- * TODO: Move this to separate file.
  ***/
-image<rgb>* convertMatToNativeImage(cv::Mat *input){
-    int w = input->cols;
-    int h = input->rows;
+image<rgb>* convertMatToNativeImage(const cv::Mat& input){
+    int w = input.cols;
+    int h = input.rows;
     image<rgb> *im = new image<rgb>(w,h);
 
-    for(int i=0; i<input->rows; i++)
+    for(int i=0; i<input.rows; i++)
     {
-        for(int j=0; j<input->cols; j++)
+        for(int j=0; j<input.cols; j++)
         {
             rgb curr;
-			cv::Vec3b intensity = input->at<cv::Vec3b>(i,j);
+			cv::Vec3b intensity = input.at<cv::Vec3b>(i,j);
             curr.b = intensity.val[0];
             curr.g = intensity.val[1];
             curr.r = intensity.val[2];
@@ -45,9 +44,9 @@ cv::Mat convertNativeToMat(image<rgb>* input){
     return output;
 }
 
-cv::Mat runEgbisOnMat(cv::Mat *input, float sigma, float k, int min_size, int *numccs) {
-    int w = input->cols;
-    int h = input->rows;
+cv::Mat runEgbisOnMat(const cv::Mat& input, float sigma, float k, int min_size, int *numccs) {
+    int w = input.cols;
+    int h = input.rows;
 	cv::Mat output(cv::Size(w,h),CV_8UC3);
 
     // 1. Convert to native format

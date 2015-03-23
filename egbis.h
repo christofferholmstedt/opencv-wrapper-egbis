@@ -5,5 +5,5 @@
 /****
  * OpenCV C++ Wrapper using the Mat class
  ***/
-cv::Mat runEgbisOnMat(cv::Mat *input, float sigma, float k, int min_size, int *numccs);
+cv::Mat runEgbisOnMat(const cv::Mat& input, float sigma, float k, int min_size, int *numccs);
 #endif

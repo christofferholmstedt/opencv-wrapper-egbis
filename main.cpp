@@ -126,7 +126,7 @@ void switch_callback_run( int position ){
     {
         // Calculate new EGBIS segmentation
         // (Mat *input, float sigma, float k, int min_size, int *numccs) {
-        egbisImage = runEgbisOnMat(&img, sigma_value, (float)k_switch_value, (float)c_switch_value, &num_ccs);
+        egbisImage = runEgbisOnMat(img, sigma_value, (float)k_switch_value, (float)c_switch_value, &num_ccs);
         // Change image shown
         imshow( "EGBIS", egbisImage);
         run_switch_value = 0;
@@ -158,7 +158,7 @@ int main(int argc, char **argv) {
     imageName = argv[1];
     // Create the first EGBIS version with standard values.
     // TODO: Set this input values to match the ones define in global scope
-    egbisImage = runEgbisOnMat(&img, 0.5, 500, 200, &num_ccs);
+    egbisImage = runEgbisOnMat(img, 0.5, 500, 200, &num_ccs);
 
     // 4. Present image
     namedWindow( imageName , CV_WINDOW_AUTOSIZE );
