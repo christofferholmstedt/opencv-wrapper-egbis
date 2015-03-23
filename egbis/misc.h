@@ -31,9 +31,7 @@ typedef unsigned char uchar;
 
 typedef struct { uchar r, g, b; } rgb;
 
-inline bool operator==(const rgb &a, const rgb &b) {
-  return ((a.r == b.r) && (a.g == b.g) && (a.b == b.b));
-}
+inline bool operator==(const rgb &a, const rgb &b);
 
 template <class T>
 inline T abs(const T &x) { return (x > 0 ? x : -x); };
@@ -54,12 +52,10 @@ inline bool check_bound(const T &x, const T&min, const T &max) {
   return ((x < min) || (x > max));
 }
 
-inline int vlib_round(float x) { return (int)(x + 0.5F); }
+inline int vlib_round(float x);
 
-inline int vlib_round(double x) { return (int)(x + 0.5); }
+inline int vlib_round(double x);
 
-inline double gaussian(double val, double sigma) {
-  return exp(-square(val/sigma)/2)/(sqrt(2*M_PI)*sigma);
-}
+inline double gaussian(double val, double sigma);
 
 #endif
