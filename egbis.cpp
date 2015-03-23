@@ -12,16 +12,16 @@ image<rgb>* convertMatToNativeImage(const cv::Mat& input){
     int h = input.rows;
     image<rgb> *im = new image<rgb>(w,h);
 
-    for(int i=0; i<input.rows; i++)
+    for(int i=0; i<h; i++)
     {
-        for(int j=0; j<input.cols; j++)
+        for(int j=0; j<w; j++)
         {
             rgb curr;
 			cv::Vec3b intensity = input.at<cv::Vec3b>(i,j);
             curr.b = intensity.val[0];
             curr.g = intensity.val[1];
             curr.r = intensity.val[2];
-            im->data[i+j*w] = curr;
+            im->data[i*w+j] = curr;
         }
     }
     return im;
@@ -32,9 +32,9 @@ cv::Mat convertNativeToMat(image<rgb>* input){
     int h = input->height();
 	cv::Mat output(cv::Size(w,h),CV_8UC3);
 
-    for(int i =0; i<w; i++){
-        for(int j=0; j<h; j++){
-            rgb curr = input->data[i+j*w];
+    for(int i =0; i<h; i++){
+        for(int j=0; j<w; j++){
+            rgb curr = input->data[i*w+j];
             output.at<cv::Vec3b>(i,j)[0] = curr.b;
             output.at<cv::Vec3b>(i,j)[1] = curr.g;
             output.at<cv::Vec3b>(i,j)[2] = curr.r;
