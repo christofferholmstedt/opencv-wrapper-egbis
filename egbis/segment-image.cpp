@@ -49,7 +49,7 @@ static inline float diff(image<float> *r, image<float> *g, image<float> *b,
  * min_size: minimum component size (enforced by post-processing stage).
  * num_ccs: number of connected components in the segmentation.
  */
-image<rgb> *segment_image(image<rgb> *im, float sigma, float c, int min_size,
+universe *segmentation(image<rgb> *im, float sigma, float c, int min_size,
 			  int *num_ccs) {
   int width = im->width();
   int height = im->height();
@@ -124,10 +124,7 @@ image<rgb> *segment_image(image<rgb> *im, float sigma, float c, int min_size,
   delete [] edges;
   *num_ccs = u->num_sets();
 
-  image<rgb> *output = visualize(u, width, height);
-  delete u;
-
-  return output;
+  return u;
 }
 
 image<rgb>* visualize(universe *u, int width, int height){
@@ -147,4 +144,12 @@ image<rgb>* visualize(universe *u, int width, int height){
 
   delete [] colors;  
   return output;
+}
+
+image<rgb> *segment_image(image<rgb> *im, float sigma, float c, int min_size,
+			  int *num_ccs) {
+	universe *u = segmentation(im, sigma, c, min_size, num_ccs);
+	image<rgb> *visualized = visualize(u, im->width(), im->height());
+	delete u;
+	return visualized;
 }
