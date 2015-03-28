@@ -124,6 +124,13 @@ image<rgb> *segment_image(image<rgb> *im, float sigma, float c, int min_size,
   delete [] edges;
   *num_ccs = u->num_sets();
 
+  image<rgb> *output = visualize(u, width, height);
+  delete u;
+
+  return output;
+}
+
+image<rgb>* visualize(universe *u, int width, int height){
   image<rgb> *output = new image<rgb>(width, height);
 
   // pick random colors for each component
@@ -139,8 +146,5 @@ image<rgb> *segment_image(image<rgb> *im, float sigma, float c, int min_size,
   }  
 
   delete [] colors;  
-  delete u;
-
   return output;
 }
-

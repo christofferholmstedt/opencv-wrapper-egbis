@@ -43,4 +43,5 @@ static inline float diff(image<float> *r, image<float> *g, image<float> *b, int 
  * num_ccs: number of connected components in the segmentation.
  */
 image<rgb> *segment_image(image<rgb> *im, float sigma, float c, int min_size, int *num_ccs);
+image<rgb>* visualize(universe *u, int width, int height);
 #endif
