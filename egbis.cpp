@@ -52,9 +52,11 @@ cv::Mat runEgbisOnMat(const cv::Mat& input, float sigma, float k, int min_size, 
     // 1. Convert to native format
     image<rgb> *nativeImage = convertMatToNativeImage(input);
     // 2. Run egbis algoritm
-    image<rgb> *segmentetImage = segment_image(nativeImage, sigma, k, min_size, numccs);
+    image<rgb> *segmentedImage = segment_image(nativeImage, sigma, k, min_size, numccs);
     // 3. Convert back to Mat format
-    output = convertNativeToMat(segmentetImage);
+    output = convertNativeToMat(segmentedImage);
 
+	delete nativeImage;
+	delete segmentedImage;
     return output;
 }
