@@ -1,4 +1,5 @@
 /*
+Copyright (C) 2015 Yasutomo Kawanishi
 Copyright (C) 2006 Pedro Felzenszwalb
 
 This program is free software; you can redistribute it and/or modify
@@ -49,7 +50,7 @@ static inline float diff(image<float> *r, image<float> *g, image<float> *b,
  * min_size: minimum component size (enforced by post-processing stage).
  * num_ccs: number of connected components in the segmentation.
  */
-image<rgb> *segment_image(image<rgb> *im, float sigma, float c, int min_size,
+universe *segmentation(image<rgb> *im, float sigma, float c, int min_size,
 			  int *num_ccs) {
   int width = im->width();
   int height = im->height();
@@ -124,6 +125,10 @@ image<rgb> *segment_image(image<rgb> *im, float sigma, float c, int min_size,
   delete [] edges;
   *num_ccs = u->num_sets();
 
+  return u;
+}
+
+image<rgb>* visualize(universe *u, int width, int height){
   image<rgb> *output = new image<rgb>(width, height);
 
   // pick random colors for each component
@@ -139,8 +144,13 @@ image<rgb> *segment_image(image<rgb> *im, float sigma, float c, int min_size,
   }  
 
   delete [] colors;  
-  delete u;
-
   return output;
 }
 
+image<rgb> *segment_image(image<rgb> *im, float sigma, float c, int min_size,
+			  int *num_ccs) {
+	universe *u = segmentation(im, sigma, c, min_size, num_ccs);
+	image<rgb> *visualized = visualize(u, im->width(), im->height());
+	delete u;
+	return visualized;
+}

@@ -1,4 +1,5 @@
 /*
+Copyright (C) 2015 Yasutomo Kawanishi
 Copyright (C) 2013 Christoffer Holmstedt
 Copyright (C) 2010 Salik Syed
 Copyright (C) 2006 Pedro Felzenszwalb
