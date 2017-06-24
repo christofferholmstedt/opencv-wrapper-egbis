@@ -26,7 +26,7 @@ sudo apt-get upgrade
 
 # Install some required applications (1GB+)
 # Depending on what features you want you can remove some of this, e.g. texlive
-sudo apt-get install build-essential libgtk2.0-dev libjpeg-dev libtiff4-dev \
+sudo apt-get install build-essential libgtk2.0-dev libjpeg-dev libtiff5-dev \
 libjasper-dev libopenexr-dev cmake python-dev python-numpy python-tk libtbb-dev \
 libeigen3-dev yasm libfaac-dev libopencore-amrnb-dev libopencore-amrwb-dev \
 libtheora-dev libvorbis-dev libxvidcore-dev libx264-dev libqt4-dev \
