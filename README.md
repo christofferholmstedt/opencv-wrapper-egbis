@@ -13,10 +13,10 @@ detect roads from Bing maps.
 
 How to use
 ----------
-This program is tested to work on Ubuntu 14.04.2 LTS with cmake from Ubuntu
+This program is tested to work on Ubuntu 16.04.2 LTS with cmake from Ubuntu
 repository and OpenCV compiled from source with Qt support.
 
-### Clone and compile OpenCV 2.4.9 for Ubuntu 14.04
+### Clone and compile OpenCV 2.4.9 for Ubuntu 16.04
 * [Instructions found at Samontab](http://www.samontab.com/web/2014/06/installing-opencv-2-4-9-in-ubuntu-14-04-lts/)
 
 ```
@@ -26,7 +26,7 @@ sudo apt-get upgrade
 
 # Install some required applications (1GB+)
 # Depending on what features you want you can remove some of this, e.g. texlive
-sudo apt-get install build-essential libgtk2.0-dev libjpeg-dev libtiff4-dev \
+sudo apt-get install build-essential libgtk2.0-dev libjpeg-dev libtiff5-dev \
 libjasper-dev libopenexr-dev cmake python-dev python-numpy python-tk libtbb-dev \
 libeigen3-dev yasm libfaac-dev libopencore-amrnb-dev libopencore-amrwb-dev \
 libtheora-dev libvorbis-dev libxvidcore-dev libx264-dev libqt4-dev \
