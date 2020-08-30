@@ -24,9 +24,9 @@ rgb random_rgb(){
   rgb c;
   double r;
   
-  c.r = (uchar)random();
-  c.g = (uchar)random();
-  c.b = (uchar)random();
+  c.r = (uchar)rand();
+  c.g = (uchar)rand();
+  c.b = (uchar)rand();
 
   return c;
 }
