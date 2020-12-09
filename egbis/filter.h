@@ -56,7 +56,7 @@ static std::vector<float> make_ ## name (float sigma) {       \
   return mask;                                                \
 }
 
-MAKE_FILTER(fgauss, exp(-0.5*square(i/sigma)));
+MAKE_FILTER(fgauss, exp(-0.5*square(i/sigma)))
 
 /* convolve image with gaussian filter */
 static image<float> *smooth(image<float> *src, float sigma) {

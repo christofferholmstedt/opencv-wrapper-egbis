@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
+#include <cassert>
 #include "egbis.h"
 
 #include <opencv2/core/core.hpp>
@@ -134,7 +135,7 @@ void switch_callback_run( int position ){
 
         // TODO: Fix this, it doesn't work as intended.
         // http://docs.opencv.org/modules/highgui/doc/user_interface.html#settrackbarpos
-        setTrackbarPos("Run", "EGBIS", run_switch_value);
+        //setTrackbarPos("Run", "EGBIS", run_switch_value);
     }
 }
 
@@ -147,6 +148,7 @@ void switch_callback_run( int position ){
  ***/
 int main(int argc, char **argv) {
 
+    assert(argc > 1);
     img = imread( argv[1], CV_LOAD_IMAGE_COLOR );
 
     if( !img.data )
