@@ -20,10 +20,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 */
 #ifndef EGBIS_H
 #define EGBIS_H
-#include <opencv2/opencv.hpp>
+#include <opencv2/core.hpp>
+#include "egbis/image.h"
+#include "egbis/misc.h"
 
 /****
  * OpenCV C++ Wrapper using the Mat class
  ***/
 cv::Mat runEgbisOnMat(const cv::Mat& input, float sigma, float k, int min_size, int *numccs);
+image<rgb>* convertMatToNativeImage(const cv::Mat& input);
+cv::Mat convertNativeToMat(image<rgb>* input);
 #endif

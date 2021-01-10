@@ -22,11 +22,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 // random color
 rgb random_rgb(){ 
   rgb c;
-  double r;
   
-  c.r = (uchar)random();
-  c.g = (uchar)random();
-  c.b = (uchar)random();
+  c.r = (uchar)rand();
+  c.g = (uchar)rand();
+  c.b = (uchar)rand();
 
   return c;
 }

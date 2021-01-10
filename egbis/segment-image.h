@@ -29,9 +29,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 // random color
 rgb random_rgb(); 
 
-// dissimilarity measure between pixels
-static inline float diff(image<float> *r, image<float> *g, image<float> *b, int x1, int y1, int x2, int y2);
-
 /*
  * Segment an image
  *
