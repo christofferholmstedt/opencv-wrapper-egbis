@@ -5,7 +5,7 @@ if(WIN32)
   # put opencv_world???.dll near the final executable before running
   # which is located at "${OpenCV_DIR}/../bin"
   # or add "${OpenCV_DIR}/../bin" to PATH environment variable
-  # cmake -D OpenCV_DIR="C:/opencv/build/x64/vc15" ..
+  # cmake -D OpenCV_DIR="C:/opencv/build/x64/vc15/lib" ..
   set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 endif(WIN32)
 
