@@ -5,7 +5,7 @@ void convolve_even(image<float> *src, image<float> *dst,
 			  std::vector<float> &mask) {
   int width = src->width();
   int height = src->height();
-  int len = mask.size();
+  int len = static_cast<int>(mask.size());
 
   for (int y = 0; y < height; y++) {
     for (int x = 0; x < width; x++) {
@@ -25,7 +25,7 @@ void convolve_odd(image<float> *src, image<float> *dst,
 			 std::vector<float> &mask) {
   int width = src->width();
   int height = src->height();
-  int len = mask.size();
+  int len = static_cast<int>(mask.size());
 
   for (int y = 0; y < height; y++) {
     for (int x = 0; x < width; x++) {
