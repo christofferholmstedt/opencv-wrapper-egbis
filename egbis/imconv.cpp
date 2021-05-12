@@ -2,19 +2,20 @@
 #include "imutil.h"
 
 image<uchar> *imageRGBtoGRAY(image<rgb> *input) {
-  const float RED_WEIGHT = 0.299;
-  const float GREEN_WEIGHT = 0.587;
-  const float BLUE_WEIGHT = 0.114;
+  const double RED_WEIGHT = 0.299;
+  const double GREEN_WEIGHT = 0.587;
+  const double BLUE_WEIGHT = 0.114;
   int width = input->width();
   int height = input->height();
   image<uchar> *output = new image<uchar>(width, height, false);
 
   for (int y = 0; y < height; y++) {
     for (int x = 0; x < width; x++) {
-      imRef(output, x, y) = (uchar)
-	(imRef(input, x, y).r * RED_WEIGHT +
-	 imRef(input, x, y).g * GREEN_WEIGHT +
-	 imRef(input, x, y).b * BLUE_WEIGHT);
+      imRef(output, x, y) = static_cast<uchar>(
+        imRef(input, x, y).r * RED_WEIGHT +
+        imRef(input, x, y).g * GREEN_WEIGHT +
+        imRef(input, x, y).b * BLUE_WEIGHT
+      );
     }
   }
   return output;
@@ -55,7 +56,7 @@ image<float> *imageINTtoFLOAT(image<int> *input) {
 
   for (int y = 0; y < height; y++) {
     for (int x = 0; x < width; x++) {
-      imRef(output, x, y) = imRef(input, x, y);
+      imRef(output, x, y) = static_cast<float>(imRef(input, x, y));
     }
   }
   return output;  

@@ -60,10 +60,10 @@ int save_switch_high = 1;
 
 float sigma_value;
 
-void switch_callback_sigma( int position ){
+void switch_callback_sigma( int position, void* ){
     sigma_switch_value = position;
 
-    sigma_value = (float)sigma_switch_value/10;
+    sigma_value = static_cast<float>(sigma_switch_value)/10;
 /*
     switch (sigma_switch_value) {
         case 0:
@@ -103,15 +103,15 @@ void switch_callback_sigma( int position ){
 */
 }
 
-void switch_callback_k( int position ){
+void switch_callback_k( int position, void* ){
     k_switch_value = position;
 }
 
-void switch_callback_c( int position ){
+void switch_callback_c( int position, void* ){
     c_switch_value = position;
 }
 
-void switch_callback_save( int position ){
+void switch_callback_save( int position, void* ){
 
     if (position == 1)
     {
@@ -122,13 +122,13 @@ void switch_callback_save( int position ){
     }
 }
 
-void switch_callback_run( int position ){
+void switch_callback_run( int position, void* ){
 
     if (position == 1)
     {
         // Calculate new EGBIS segmentation
         // (Mat *input, float sigma, float k, int min_size, int *numccs) {
-        egbisImage = runEgbisOnMat(img, sigma_value, (float)k_switch_value, (float)c_switch_value, &num_ccs);
+        egbisImage = runEgbisOnMat(img, sigma_value, static_cast<float>(k_switch_value), c_switch_value, &num_ccs);
         // Change image shown
         imshow( "EGBIS", egbisImage);
         run_switch_value = 0;
@@ -149,7 +149,7 @@ void switch_callback_run( int position ){
 int main(int argc, char **argv) {
 
     assert(argc > 1);
-    img = imread( argv[1], CV_LOAD_IMAGE_COLOR );
+    img = imread( argv[1], cv::IMREAD_COLOR );
 
     if( !img.data )
     {
@@ -164,18 +164,18 @@ int main(int argc, char **argv) {
     egbisImage = runEgbisOnMat(img, 0.5, 500, 200, &num_ccs);
 
     // 4. Present image
-    namedWindow( imageName , CV_WINDOW_AUTOSIZE );
+    namedWindow( imageName , cv::WINDOW_AUTOSIZE );
     imshow( imageName , img );
 
     // TODO: Change to C++ method
     // http://docs.opencv.org/modules/highgui/doc/user_interface.html#createtrackbar
-    cvCreateTrackbar("Sigma [x/10]",imageName, &sigma_switch_value, sigma_switch_high, switch_callback_sigma);
-    cvCreateTrackbar("k",imageName, &k_switch_value, k_switch_high, switch_callback_k);
-    cvCreateTrackbar("c",imageName, &c_switch_value, c_switch_high, switch_callback_c);
-    cvCreateTrackbar("Run",imageName, &run_switch_value, run_switch_high, switch_callback_run);
-    cvCreateTrackbar("Save EGBIS image",imageName, &save_switch_value, save_switch_high, switch_callback_save);
+    cv::createTrackbar("Sigma [x/10]", imageName, &sigma_switch_value, sigma_switch_high, switch_callback_sigma);
+    cv::createTrackbar("k",imageName, &k_switch_value, k_switch_high, switch_callback_k);
+    cv::createTrackbar("c",imageName, &c_switch_value, c_switch_high, switch_callback_c);
+    cv::createTrackbar("Run",imageName, &run_switch_value, run_switch_high, switch_callback_run);
+    cv::createTrackbar("Save EGBIS image",imageName, &save_switch_value, save_switch_high, switch_callback_save);
 
-    namedWindow( "EGBIS", CV_WINDOW_AUTOSIZE );
+    namedWindow( "EGBIS", cv::WINDOW_AUTOSIZE );
     imshow( "EGBIS", egbisImage);
 /*
     float sigma = atof(argv[1]);
@@ -191,7 +191,7 @@ int main(int argc, char **argv) {
     savePPM(seg, argv[5]);
 
     Mat gray_image;
-    cvtColor( image, gray_image, CV_BGR2GRAY );
+    cvtColor( image, gray_image, cv::COLOR_BGR2GRAY );
     imwrite( "../../images/tempImage.jpg", gray_image );
 */
     waitKey(0);

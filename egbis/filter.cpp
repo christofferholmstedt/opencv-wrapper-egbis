@@ -22,13 +22,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 #include "filter.h"
 
 void normalize(std::vector<float> &mask) {
-  int len = mask.size();
+  size_t len = mask.size();
   float sum = 0;
-  for (int i = 1; i < len; i++) {
+  for (size_t i = 1; i < len; i++) {
     sum += fabs(mask[i]);
   }
   sum = 2*sum + fabs(mask[0]);
-  for (int i = 0; i < len; i++) {
+  for (size_t i = 0; i < len; i++) {
     mask[i] /= sum;
   }
 }
@@ -40,7 +40,7 @@ std::vector<float> make_fgauss(float sigma)
   std::vector<float> mask(len);
   for (int i = 0; i < len; i++)
   {
-    mask[i] = exp(-0.5 * square(i / sigma));
+    mask[i] = static_cast<float>(exp(-0.5 * square(i / sigma)));
   }
   return mask;
 }
